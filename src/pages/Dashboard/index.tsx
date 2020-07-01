@@ -34,13 +34,11 @@ const Dashboard: React.FC = () => {
   const [balance, setBalance] = useState<Balance>({} as Balance);
 
   useEffect(() => {
-    async function loadTransactions(): Promise<void> {
-      const response = await api.get('/transactions');
+    api.get('/transactions').then(response => {
       setTransactions([...transactions, ...response.data.transactions]);
       setBalance(response.data.balance);
-    }
-
-    loadTransactions();
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
